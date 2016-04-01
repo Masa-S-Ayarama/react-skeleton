@@ -1,0 +1,28 @@
+{
+  "name": "myapp-skeleton",
+  "version": "1.0.0",
+  "description": "My First App create with react-skeleton",
+  "main": "index.js",
+  "scripts": {
+    "start": "watchify src/main.jsx -v -t [ babelify --presets [ react ] ] -o public/js/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pan-Masa/myApp-skeleton.git"
+  },
+  "author": "Pan-Masa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pan-Masa/myApp-skeleton/issues"
+  },
+  "homepage": "https://github.com/Pan-Masa/myApp-skeleton#readme",
+  "dependencies": {
+    "babel-preset-react": "^6.5.0",
+    "babelify": "^7.2.0",
+    "colors": "^1.1.2",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "watchify": "^3.7.0"
+  }
+}
