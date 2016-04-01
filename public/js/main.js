@@ -19078,69 +19078,120 @@ var React = require('react');
 var List = require('./List.jsx');
 
 var ListManager = React.createClass({
-  displayName: 'ListManager',
+    displayName: 'ListManager',
 
-  //Define Properties of object,
-  //every react in component will call this funtion just once when loaded
-  getInitialState: function () {
-    return { items: [], newItemText: '' };
-  },
-  //
-  onChange: function (e) {
-    this.setState({ newItemText: e.target.value });
-  },
-  //function call when button was pressed, 'e' = element
-  handleSubmit: function (e) {
-    //make event not occur on click button itself or on accident,
-    //but occur on html form submit function
-    e.preventDefault();
+    //Define Properties of object,
+    //every react in component will call this funtion just once when loaded
+    getInitialState: function () {
+        return { items: [], newItemText: '' };
+    },
+    //
+    onChange: function (e) {
+        //Update the state property every time a keystroke is typed
+        this.setState({ newItemText: e.target.value });
+    },
+    //function call when button was pressed, 'e' = element
+    handleSubmit: function (e) {
+        //make event not occur on click button itself or on accident, but occur on html form submit function
+        //stop the button from getting clicks since we are using form onSubmit
+        e.preventDefault();
 
-    //each component has 'props' and 'state'
-    //'props' store data that can read only, can't change
-    //'state' store data that can be change or mutable data
-    var currentItems = this.state.items;
+        //each component has 'props' and 'state'
+        //'props' store data that can read only, can't change
+        //'state' store data that can be change or mutable data
+        //Grab the current list of items
+        var currentItems = this.state.items;
 
-    //put new item to end of the array
-    currentItems.push(this.state.newItemText);
+        //put new item to end of the array
+        currentItems.push(this.state.newItemText);
 
-    //'setState' is function of the class react,
-    //call when you want to change the state of your application, text or object with the properties
-    //when you pass it here, it would be your properties of your state,
-    //and data will be update automatically
-    //clear data in 'newItemText', to make textBox clear
-    this.setState({ items: currentItems, newItemText: '' });
-  },
-  render: function () {
-    return React.createElement(
-      'div',
-      null,
-      React.createElement(
-        'h3',
-        null,
-        this.props.title
-      ),
-      React.createElement(
-        'form',
-        { onSubmit: this.handleSubmit },
-        React.createElement('input', { onChange: this.onChange, value: this.state.newItemText }),
-        React.createElement(
-          'button',
-          null,
-          'Add'
-        )
-      ),
-      React.createElement(List, { items: this.state.items })
-    );
-  }
+        //'setState' is function of the class react,
+        //call when you want to change the state of your application, text or object with the properties
+        //when you pass it here, it would be your properties of your state,
+        //and data will be update automatically
+        //after pressed button, add data to 'items',
+        //and clear data in 'newItemText', to make textBox clear
+        //Update the main item list with the new list and clear the newItemText
+        this.setState({ items: currentItems, newItemText: '' });
+    },
+    render: function () {
+        //onChange is called with every keystroke so we can strore the most recent data entered
+        //value is what the user sees in the input box - we point this to newItemText so it update on every
+
+        var divStyle = {
+            marginTop: 10
+        };
+        var headingStyle = {};
+
+        //If pass in headingColor then do something
+        if (this.props.headingColor) {
+            headingStyle.background = this.props.headingColor;
+        }
+
+        return(
+            //'className' allows to set css class to actual element
+            //not using 'class' cause it maybe confuse with jsx react's class
+            //but it can use 'class' keyword as normal on html file,
+            //but on .jsx file must use 'className'
+            React.createElement(
+                'div',
+                { style: divStyle, className: 'col-sm-4' },
+                React.createElement(
+                    'div',
+                    { className: 'panel panel-primary' },
+                    React.createElement(
+                        'div',
+                        { style: headingStyle, className: 'panel-heading' },
+                        React.createElement(
+                            'h3',
+                            null,
+                            this.props.title
+                        )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'row panel-body' },
+                        'Please input ingredients:',
+                        React.createElement(
+                            'form',
+                            { onSubmit: this.handleSubmit },
+                            React.createElement(
+                                'div',
+                                { className: 'col-sm-9' },
+                                React.createElement('input', { className: 'form-control', onChange: this.onChange, value: this.state.newItemText })
+                            ),
+                            React.createElement(
+                                'div',
+                                { className: 'col-sm-2' },
+                                React.createElement(
+                                    'button',
+                                    { className: 'btn btn-primary' },
+                                    'Add'
+                                )
+                            )
+                        )
+                    ),
+                    React.createElement(List, { items: this.state.items })
+                )
+            )
+        );
+    }
 });
 
 module.exports = ListManager;
 
 },{"./List.jsx":159,"react":157}],162:[function(require,module,exports){
+/* This is the entry point file for our application. This is the file you will use to construct
+ * your HTML. You will use your pre-created Components and then locate the HTML elements thet you created
+ * in your index.html and render the Component
+*/
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 var ListManager = require('./components/ListManager.jsx');
 
-ReactDOM.render(React.createElement(ListManager, { title: 'ingredients' }), document.getElementById('Ingredients'));
+ReactDOM.render(React.createElement(ListManager, { title: 'Ingredients' }), document.getElementById('ingredients'));
+ReactDOM.render(React.createElement(ListManager, { title: 'ToDo' }), document.getElementById('todo'));
+ReactDOM.render(React.createElement(ListManager, { title: 'Christmas', headingColor: '#b31217' }), document.getElementById('christmas'));
 
 },{"./components/ListManager.jsx":161,"react":157,"react-dom":1}]},{},[162]);
