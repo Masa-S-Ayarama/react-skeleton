@@ -43,9 +43,7 @@ var ListManager = React.createClass({
       var divStyle = {
         marginTop: 10
       };
-      var headingStyle = {
-
-      };
+      var headingStyle = { };
 
       //If pass in headingColor then do something
       if (this.props.headingColor) {
