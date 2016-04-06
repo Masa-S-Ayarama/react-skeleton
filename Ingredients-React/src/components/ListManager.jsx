@@ -45,10 +45,12 @@ var ListManager = React.createClass({
       };
       var headingStyle = { };
 
+
       //If pass in headingColor then do something
       if (this.props.headingColor) {
           headingStyle.background = this.props.headingColor;
       }
+
 
       return (
         //'className' is bootstrap property allows to set css class to actual element
@@ -56,17 +58,19 @@ var ListManager = React.createClass({
         //but it can use 'class' keyword as normal on html file,
         //but on .jsx file must use 'className'
         <div style={divStyle} className="col-sm-4">
-            <div className="panel panel-primary">
+            <div className="panel panel-default">
                 <div style={headingStyle} className="panel-heading">
                     <h3>{this.props.title}</h3>
                 </div>
                 <div className="row panel-body">
-                    Please input ingredients:
                     <form onSubmit={this.handleSubmit}>
+                        <div className="col-sm-9">
+                            <h5>{this.props.header}</h5>
+                        </div>
                         <div className="col-sm-9">
                             <input className="form-control" onChange={this.onChange} value={this.state.newItemText} />
                         </div>
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                             <button className="btn btn-primary">Add</button>
                         </div>
                     </form>

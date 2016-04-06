@@ -19080,7 +19080,7 @@ var List = require('./List.jsx');
 var ListManager = React.createClass({
     displayName: 'ListManager',
 
-    //Define Properties of object,
+    //Define and initialize Properties of object,
     //every react in component will call this funtion just once when loaded
     getInitialState: function () {
         return { items: [], newItemText: '' };
@@ -19123,13 +19123,15 @@ var ListManager = React.createClass({
         };
         var headingStyle = {};
 
+        var paddingStyle = {};
+
         //If pass in headingColor then do something
         if (this.props.headingColor) {
             headingStyle.background = this.props.headingColor;
         }
 
         return(
-            //'className' allows to set css class to actual element
+            //'className' is bootstrap property allows to set css class to actual element
             //not using 'class' cause it maybe confuse with jsx react's class
             //but it can use 'class' keyword as normal on html file,
             //but on .jsx file must use 'className'
@@ -19151,10 +19153,18 @@ var ListManager = React.createClass({
                     React.createElement(
                         'div',
                         { className: 'row panel-body' },
-                        'Please input ingredients:',
                         React.createElement(
                             'form',
                             { onSubmit: this.handleSubmit },
+                            React.createElement(
+                                'div',
+                                { className: 'col-sm-9' },
+                                React.createElement(
+                                    'h5',
+                                    null,
+                                    this.props.header
+                                )
+                            ),
                             React.createElement(
                                 'div',
                                 { className: 'col-sm-9' },
@@ -19162,7 +19172,7 @@ var ListManager = React.createClass({
                             ),
                             React.createElement(
                                 'div',
-                                { className: 'col-sm-2' },
+                                { className: 'col-sm-3' },
                                 React.createElement(
                                     'button',
                                     { className: 'btn btn-primary' },
@@ -19190,8 +19200,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var ListManager = require('./components/ListManager.jsx');
 
-ReactDOM.render(React.createElement(ListManager, { title: 'Ingredients' }), document.getElementById('ingredients'));
-ReactDOM.render(React.createElement(ListManager, { title: 'ToDo' }), document.getElementById('todo'));
-ReactDOM.render(React.createElement(ListManager, { title: 'Christmas', headingColor: '#b31217' }), document.getElementById('christmas'));
+ReactDOM.render(React.createElement(ListManager, { title: 'Ingredients', header: 'Please input ingredients:' }), document.getElementById('ingredients'));
+ReactDOM.render(React.createElement(ListManager, { title: 'ToDo', header: 'Please input todo list:' }), document.getElementById('todo'));
+ReactDOM.render(React.createElement(ListManager, { title: 'Christmas', header: 'Please input presents:', TheHeadingColor: '#b31217' }), document.getElementById('christmas'));
 
 },{"./components/ListManager.jsx":161,"react":157,"react-dom":1}]},{},[162]);

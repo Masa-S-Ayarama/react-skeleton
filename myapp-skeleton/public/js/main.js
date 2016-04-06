@@ -19032,51 +19032,82 @@ process.umask = function() { return 0; };
 
 },{}],159:[function(require,module,exports){
 var React = require('react');
-var ListItem = require('./ListItem.jsx');
-var shoppingitems = [{ "id": 1, "text": "rice" }, { "id": 2, "text": "apple" }, { "id": 3, "text": "milk" }, { "id": 4, "text": "pants" }, { "id": 5, "text": "cake" }];
+//var List = require('./List.jsx');
 
-var List = React.createClass({
-  displayName: 'List',
+var ListManager = React.createClass({
+  displayName: 'ListManager',
 
+
+  getInitialState: function () {
+    return { items: [], newItemText: '' };
+  },
+  //call this on every keystroke, update newItemText automatically
+  onChange: function (e) {
+    this.setState({ newItemText: e.target.value });
+  },
+  handleSubmit: function (e) {
+    //'items' is string array, newItemText is 'string'
+    e.preventDefault();
+    //copy existing data
+    var currentItems = this.state.items;
+    //add new data to last index of array
+    currentItems.push(this.state.newItemText);
+    //save data to 'items' property, clear data in 'newItemText'
+    this.setState({ items: currentItems, newItemText: '' });
+  },
   render: function () {
-    var listItems = shoppingitems.map(function (item) {
-      return React.createElement(ListItem, { key: item.id, shoppingitem: item.text });
-    });
+    var mainBGColor = {
+      background: "#E0E0E0"
+    };
+    var upperBoxStyle = {
+      height: 200
+    };
+    var lowerBoxStyle = {
+      height: 400
+    };
+    var backgroundStyle = {};
+
+    if (this.props.backgroundColor) {
+      backgroundStyle.background = this.props.backgroundColor;
+    }
+
     return React.createElement(
-      'ol',
-      null,
-      listItems
-    );
-  }
-});
-
-module.exports = List;
-
-},{"./ListItem.jsx":160,"react":157}],160:[function(require,module,exports){
-var React = require('react');
-var ListItem = React.createClass({
-  displayName: 'ListItem',
-
-  render: function () {
-    return React.createElement(
-      'li',
-      null,
+      'div',
+      { style: upperBoxStyle, className: 'col-sm-3' },
       React.createElement(
-        'h4',
-        null,
-        this.props.shoppingitem
+        'div',
+        { className: 'panel panel-default' },
+        React.createElement(
+          'div',
+          { style: backgroundStyle, className: 'panel-body' },
+          React.createElement(
+            'h4',
+            { className: 'text-center' },
+            this.props.title
+          )
+        )
       )
-    );
+    )
+
+    //Second row
+
+    ;
   }
 });
 
-module.exports = ListItem;
+module.exports = ListManager;
 
-},{"react":157}],161:[function(require,module,exports){
+},{"react":157}],160:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
-var List = require('./components/List.jsx');
+var ListManager = require('./components/ListManager.jsx');
 
-ReactDOM.render(React.createElement(List, null), document.getElementById('shoppingitems'));
+ReactDOM.render(React.createElement(ListManager, { title: 'Clothes', backgroundColor: 'white' }), document.getElementById('clothes'));
+ReactDOM.render(React.createElement(ListManager, { title: 'Foods', backgroundColor: 'white' }), document.getElementById('foods'));
+ReactDOM.render(React.createElement(ListManager, { title: 'Toys', backgroundColor: 'white' }), document.getElementById('toys'));
+ReactDOM.render(React.createElement(ListManager, { title: 'Weather', backgroundColor: 'orange' }), document.getElementById('weather'));
+ReactDOM.render(React.createElement(ListManager, { title: 'Shot Views', backgroundColor: 'orange' }), document.getElementById('views'));
+ReactDOM.render(React.createElement(ListManager, { title: 'Likes', backgroundColor: 'orange' }), document.getElementById('likes'));
+ReactDOM.render(React.createElement(ListManager, { title: 'Comments', backgroundColor: 'orange' }), document.getElementById('comments'));
 
-},{"./components/List.jsx":159,"react":157,"react-dom":1}]},{},[161]);
+},{"./components/ListManager.jsx":159,"react":157,"react-dom":1}]},{},[160]);
